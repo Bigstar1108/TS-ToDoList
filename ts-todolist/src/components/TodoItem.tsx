@@ -1,25 +1,38 @@
 import React from 'react';
 import '../styles/TodoItem.scss';
+import { useTodosDispatch, Todo } from '../contexts/TodosContext';
 
 export type TodoItemProps = {
-    todo : {
-        id : number;
-        text : string;
-        done : boolean;
-    };
+    todo : Todo;
 }
 
 function TodoItem({ todo } : TodoItemProps){
+    const dispatch = useTodosDispatch();
+
+    const onToggle = () => {
+        dispatch({
+            type: 'TOGGLE',
+            id: todo.id
+        });
+    };
+
+    const onRemove = () => {
+        dispatch({
+            type: 'REMOVE',
+            id: todo.id
+        });
+    };
+
     return(
         <div className = "todoItem">
             <div className = "ItemIndex">
                 <span>{todo.id}</span>
             </div>
             <div className = {`ItemContent ${todo.done ? 'done' : ''}`}>
-                <span>{todo.text}</span>
+                <span onClick = {onToggle}>{todo.text}</span>
             </div>
             <div className = "ItemBtn">
-                <span>삭제</span>
+                <span onClick = {onRemove}>삭제</span>
             </div>
         </div>
     );
