@@ -1,29 +1,15 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 import '../styles/TodoList.scss';
+import { useTodosState } from '../contexts/TodosContext';
 
 function TodoList(){
-    const todos = [
-        {
-            id : 1,
-            text : "TypeScript 배우기",
-            done : true
-        },
-        {
-            id : 2,
-            text : "블로그 글 쓰기",
-            done : false
-        },
-        {
-            id : 3,
-            text : "맛있는 밥 먹기",
-            done : false
-        },
-    ];
+    const todos = useTodosState();
     return(
         <div className = "todoList">
             {
-                todos.map(todo => (
+                todos.length === 0 ? <span>오늘 할 일을 등록하세요!</span>
+                : todos.map(todo => (
                     <TodoItem todo = {todo} key = {todo.id} />
                 ))
             }
